@@ -18,6 +18,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+// import 'package:full_screen_image/full_screen_image.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -48,7 +49,7 @@ class FormReflectPageState extends State<FormReflectPage> {
   List<String> urls = [];
   List<String> video_urls = [];
   List<String> listCategory = ['Giáo dục', 'An ninh', 'Cơ sở vật chất'];
-  String? selectNameCategogy;
+  String? selectNameCategory;
 
   bool _isloading = false;
   String imageUrl = '';
@@ -192,7 +193,8 @@ class FormReflectPageState extends State<FormReflectPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("CATEGOGY == ${selectNameCategogy}");
+    print("CATEGOGY == ${selectNameCategory}");
+    
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -200,7 +202,8 @@ class FormReflectPageState extends State<FormReflectPage> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(LineAwesomeIcons.angle_left)),
+            icon: Icon(LineAwesomeIcons.angle_left, color: Colors.white,)
+        ),
         title: Text(
           "Đăng phản ánh",
           style: TextStyle(
@@ -209,7 +212,6 @@ class FormReflectPageState extends State<FormReflectPage> {
         ),
         backgroundColor: mainColor,
         centerTitle: true,
-        // backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
       body: _isloading
@@ -230,7 +232,6 @@ class FormReflectPageState extends State<FormReflectPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 10,),
-                          const SizedBox(height: 8,),
 
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 16),
@@ -238,7 +239,6 @@ class FormReflectPageState extends State<FormReflectPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
                                 TitleReflect(title: "Tiêu đề"),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
@@ -288,19 +288,18 @@ class FormReflectPageState extends State<FormReflectPage> {
                                         hint: Transform.translate(
                                           offset: Offset(-10, 0),
                                           child: Text(
-                                            selectNameCategogy ??
-                                                listCategory[0],
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black),
+                                            selectNameCategory ?? listCategory[0],
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black
+                                            ),
                                           ),
                                         ),
                                         items: listCategory
-                                            .map((item) =>
-                                                DropdownMenuItem<String>(
+                                            .map((item) => DropdownMenuItem<String>(
                                                   value: item,
                                                   child: Transform.translate(
-                                                    offset: Offset(-10, 0),
+                                                    offset: const Offset(-10, 0),
                                                     child: Text(
                                                       item,
                                                       style: const TextStyle(
@@ -310,28 +309,21 @@ class FormReflectPageState extends State<FormReflectPage> {
                                                   ),
                                                 ))
                                             .toList(),
-                                        value: selectNameCategogy,
+                                        value: selectNameCategory,
                                         onChanged: (value) {
                                           setState(() {
-                                            selectNameCategogy =
-                                                value as String?;
+                                            selectNameCategory = value as String?;
                                             if (value == listCategory[0]) {
-                                              selectNameCategogy =
-                                                  listCategory[0];
+                                              selectNameCategory = listCategory[0];
                                             }
                                             if (value == listCategory[1]) {
-                                              selectNameCategogy =
-                                                  listCategory[1];
+                                              selectNameCategory = listCategory[1];
                                             }
                                             if (value == listCategory[2]) {
-                                              selectNameCategogy =
-                                                  listCategory[2];
+                                              selectNameCategory = listCategory[2];
                                             }
                                           });
                                         },
-                                        // buttonHeight: 30,
-                                        // itemHeight: 40,
-                                        // dropdownMaxHeight: 200,
                                       ),
                                     ),
                                   ),
@@ -425,8 +417,7 @@ class FormReflectPageState extends State<FormReflectPage> {
                                           height: 90,
                                           width: 90,
                                           child: Center(
-                                            child:
-                                              Icon(Icons.image_outlined)
+                                            child: Icon(Icons.image_outlined)
                                           ),
                                         ),
                                       ),
@@ -439,32 +430,19 @@ class FormReflectPageState extends State<FormReflectPage> {
                                         child: ListView.separated(
                                           itemCount: listFile.length,
                                           separatorBuilder: (context, index) =>
-                                              SizedBox(
-                                            width: 20,
-                                          ),
+                                              const SizedBox(width: 20,),
                                           scrollDirection: Axis.horizontal,
                                           itemBuilder: (context, index) {
-                                            print(
-                                                "IMAGE == ${listFile[index].path}");
+                                            print("IMAGE == ${listFile[index].path}");
 
-                                            if (listFile[index]
-                                                    .path
-                                                    .toLowerCase()
-                                                    .contains("jpg") ||
-                                                listFile[index]
-                                                    .path
-                                                    .toLowerCase()
-                                                    .contains("png") ||
-                                                listFile[index]
-                                                    .path
-                                                    .toLowerCase()
-                                                    .contains("jpeg") ||
-                                                listFile[index]
-                                                    .path
-                                                    .toLowerCase()
-                                                    .contains("webp")) {
-                                              print(
-                                                  "file ${listFile[index].path}");
+                                            if (listFile[index].path.toLowerCase().contains("jpg") ||
+                                                listFile[index].path.toLowerCase().contains("png") ||
+                                                listFile[index].path.toLowerCase().contains("jpeg") ||
+                                                listFile[index].path.toLowerCase().contains("webp"))
+                                                // listFile[index].path.toLowerCase().contains("mp4"))
+                                            {
+
+                                              print("if file ${listFile[index].path}");
                                               return Stack(
                                                 children: [
                                                   FullScreenWidget(
@@ -472,9 +450,7 @@ class FormReflectPageState extends State<FormReflectPage> {
                                                       child: Hero(
                                                         tag: "guiphananh",
                                                         child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
+                                                          borderRadius: BorderRadius.circular(10),
                                                           child: Image.file(
                                                             listFile[index],
                                                             fit: BoxFit.cover,
@@ -489,8 +465,7 @@ class FormReflectPageState extends State<FormReflectPage> {
                                                     child: InkWell(
                                                       onTap: () {
                                                         setState(() {
-                                                          listFile.remove(
-                                                              listFile[index]);
+                                                          listFile.remove(listFile[index]);
                                                         });
                                                       },
                                                       child: Icon(
@@ -503,40 +478,23 @@ class FormReflectPageState extends State<FormReflectPage> {
                                                 ],
                                               );
                                             } else {
-                                              print(
-                                                  "file ${listFile[index].path}");
+                                              print("else file ${listFile[index].path}");
                                               return Stack(
                                                 children: [
                                                   Platform.isIOS
-                                                      ? Container(
-                                                          height: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  2 -
-                                                              30,
-                                                          width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  2 -
-                                                              30,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          199,
-                                                                          202,
-                                                                          204)),
-                                                          child: Icon(
-                                                            Icons
-                                                                .video_collection,
-                                                            color: Colors.white,
-                                                            size: 30,
-                                                          ),
-                                                        )
-                                                      : Container( ),
+                                                    ? Container(
+                                                        height: MediaQuery.of(context).size.width / 2 - 30,
+                                                        width: MediaQuery.of(context).size.width / 2 - 30,
+                                                        decoration: BoxDecoration(
+                                                            color: Color.fromARGB(255, 199, 202, 204)
+                                                        ),
+                                                        child: Icon(
+                                                          Icons.video_collection,
+                                                          color: Colors.white,
+                                                          size: 30,
+                                                        ),
+                                                      )
+                                                    : Container( ),
                                                   Positioned(
                                                     top: 5,
                                                     left: 5,
@@ -565,6 +523,7 @@ class FormReflectPageState extends State<FormReflectPage> {
                                 ),
 
                                 const SizedBox(height: 30,),
+
                                 Center(
                                   child: SizedBox(
                                     height: 50,
@@ -573,16 +532,14 @@ class FormReflectPageState extends State<FormReflectPage> {
                                         onPressed: () async {
                                           print("TITLE == ${controller.title.text}");
 
-                                          if (controller.title.text.trim() == null ||
-                                              controller.title.text.trim() == "") {
-
+                                          if (controller.title.text.trim() == null || controller.title.text.trim() == "") {
                                             AnimatedSnackBar.material(
                                               'Chưa nhập tiêu đề!',
                                               duration: Duration(milliseconds: 1),
                                               type: AnimatedSnackBarType.error,
                                               mobileSnackBarPosition: MobileSnackBarPosition.bottom,
                                             ).show(context);
-                                            print("ok 1");
+                                            print("Chưa nhập tiêu đề");
                                             return null;
                                           } else {
                                             setState(() {
@@ -595,7 +552,7 @@ class FormReflectPageState extends State<FormReflectPage> {
                                                     // likes: [],
                                                     email: getEmail(),
                                                     title: controller.title.text.trim(),
-                                                    category: selectNameCategogy,
+                                                    category: selectNameCategory,
                                                     content: controller.content.text.trim(),
                                                     address: controller.address.text.trim(),
                                                     media: urls,
@@ -622,17 +579,20 @@ class FormReflectPageState extends State<FormReflectPage> {
                                           }
                                         },
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.amber),
+                                            backgroundColor: Colors.red
+                                        ),
                                         child: Text(
                                           "Đăng phản ánh",
                                           style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white
                                           ),
                                         )
                                     ),
                                   ),
                                 ),
+
                                 const SizedBox(height: 60,)
                               ],
                             ),

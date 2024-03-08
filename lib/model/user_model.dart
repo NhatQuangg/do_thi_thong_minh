@@ -21,11 +21,11 @@ class UserModel {
   // Dùng để lưu trữ data vào Cloud FireStore
   toJson() {
     return {
-      "FullName": fullName,
-      "Email": email,
-      "Phone": phoneNo,
-      "Password": password,
-      "Level": level
+      "fullName": fullName,
+      "email": email,
+      "phone": phoneNo,
+      "password": password,
+      "level": level
     };
   }
 
@@ -34,10 +34,10 @@ class UserModel {
     final data = document.data()!;
     return UserModel(
         id: document.id,
-        fullName: data["FullName"],
-        email: data["Email"],
-        phoneNo: data["Phone"],
-        password: data["Password"],
-        level: data["Level"]);
+        fullName: data["fullName"],
+        email: data["email"],
+        phoneNo: data["phone"],
+        password: data["password"],
+        level: data["level"]);
   }
 }

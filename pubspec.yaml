@@ -60,6 +60,9 @@ dependencies:
   dotted_border: 2.0.0
   lottie: ^2.3.2
   file_picker: ^4.2.0
+  date_time_field: ^0.0.2
+  timeago: ^3.0.0
+  flutter_slidable: ^3.0.1
 
 dev_dependencies:
   flutter_test:

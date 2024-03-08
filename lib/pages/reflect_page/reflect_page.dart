@@ -2,6 +2,8 @@ import 'package:do_thi_thong_minh/constants/constant.dart';
 import 'package:do_thi_thong_minh/pages/reflect_page/form_reflect_page/form_reflect_page.dart';
 import 'package:do_thi_thong_minh/pages/reflect_page/tab1.dart';
 import 'package:do_thi_thong_minh/pages/reflect_page/tab2.dart';
+import 'package:do_thi_thong_minh/pages/reflect_page/tab_1/general_page.dart';
+import 'package:do_thi_thong_minh/pages/reflect_page/tab_2/individual_screen.dart';
 import 'package:flutter/material.dart';
 
 class ReflectPage extends StatefulWidget {
@@ -22,10 +24,10 @@ class _ReflectPageState extends State<ReflectPage> {
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            tab1(),
-            tab2(),
-            // GeneralPage(),
-            // IndividualScreen(),
+            // tab1(),
+            // tab2(),
+            GeneralPage(),
+            IndividualScreen(),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -53,7 +55,7 @@ class _ReflectPageState extends State<ReflectPage> {
             labelColor: Colors.white,
             labelStyle: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 15
+              fontSize: 17
             ),
             unselectedLabelColor: kBorderColor,
             indicatorSize: TabBarIndicatorSize.tab,

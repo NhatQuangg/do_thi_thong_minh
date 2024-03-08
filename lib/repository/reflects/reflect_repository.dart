@@ -29,7 +29,17 @@ class ReflectRepository extends GetxController {
   }
 
   Future<List<ReflectModel>> allReflect() async {
-    final snapshot = await _db.collection("Reflect").get();
+    final snapshot = await _db.collection("Reflects").get();
+    final reflectData =
+    snapshot.docs.map((e) => ReflectModel.fromSnapshot(e)).toList();
+    return reflectData;
+  }
+
+  Future<List<ReflectModel>> getReflect(int handle) async {
+    final snapshot = await _db
+        .collection("Reflects")
+        .where("handle", isEqualTo: handle)
+        .get();
     final reflectData =
     snapshot.docs.map((e) => ReflectModel.fromSnapshot(e)).toList();
     return reflectData;
@@ -45,7 +55,15 @@ class ReflectRepository extends GetxController {
     return reflectData;
   }
 
-  Future<List<ReflectModel>> allReflectUser(String email, int handle) async {
+  Future<List<ReflectModel>> allReflectUser(String email) async {
+    final snapshot =
+    await _db.collection("Reflects").where("email", isEqualTo: email).get();
+    final reflectData =
+    snapshot.docs.map((e) => ReflectModel.fromSnapshot(e)).toList();
+    return reflectData;
+  }
+
+  Future<List<ReflectModel>> getReflectUser(String email, int handle) async {
     final snapshot = await _db
         .collection("Reflects")
         .where("email", isEqualTo: email)

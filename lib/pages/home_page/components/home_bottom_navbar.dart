@@ -1,6 +1,7 @@
 import 'package:do_thi_thong_minh/constants/constant.dart';
 import 'package:do_thi_thong_minh/pages/home_page/home_page.dart';
 import 'package:do_thi_thong_minh/pages/profile_page/profile_page.dart';
+import 'package:do_thi_thong_minh/pages/profile_page/profile_page_2.dart';
 import 'package:do_thi_thong_minh/repository/authentication/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

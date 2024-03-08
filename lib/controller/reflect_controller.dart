@@ -69,6 +69,14 @@ class ReflectController extends GetxController {
     return await _reflectRepo.allReflect();
   }
 
+  Future<List<ReflectModel>> getProcessedReflect() async {
+    return await _reflectRepo.getReflect(0);
+  }
+
+  Future<List<ReflectModel>> getProcessingReflect() async {
+    return await _reflectRepo.getReflect(1);
+  }
+
   Future<List<ReflectModel>> getAllReflectNonAdmin() async {
     return await _reflectRepo.allReflectAdmin(1);
   }
@@ -89,22 +97,29 @@ class ReflectController extends GetxController {
     final email = _authRepo.firebaseUser.value?.email;
     print("EMAIL == $email");
 
-    return await _reflectRepo.allReflectUser(email!, 1);
+    return await _reflectRepo.allReflectUser(email!);
   }
 
-  Future<List<ReflectModel>> getAllReflectUserSucc() async {
+  Future<List<ReflectModel>> getProcessedReflectUser() async {
     final email = _authRepo.firebaseUser.value?.email;
     print("EMAIL == $email");
 
-    return await _reflectRepo.allReflectUser(email!, 2);
+    return await _reflectRepo.getReflectUser(email!, 0);
   }
 
-  Future<List<ReflectModel>> getAllReflectUserNotAccept() async {
+  Future<List<ReflectModel>> getProcessingReflectUser() async {
     final email = _authRepo.firebaseUser.value?.email;
     print("EMAIL == $email");
 
-    return await _reflectRepo.allReflectUser(email!, 3);
+    return await _reflectRepo.getReflectUser(email!, 1);
   }
+
+  // Future<List<ReflectModel>> getAllReflectUserNotAccept() async {
+  //   final email = _authRepo.firebaseUser.value?.email;
+  //   print("EMAIL == $email");
+  //
+  //   return await _reflectRepo.allReflectUser(email!, 3);
+  // }
 
   Future<List<ReflectModel>> getAllReflecHandle2() async {
     return await _reflectRepo.allReflectActive(2);
@@ -137,7 +152,7 @@ class ReflectController extends GetxController {
   }
 
   static Future updateLikesRef(ReflectModel reflect) async {
-    final reflectCollection = FirebaseFirestore.instance.collection("Reflect");
+    final reflectCollection = FirebaseFirestore.instance.collection("Reflects");
 
     final docRef = reflectCollection.doc(reflect.id);
 

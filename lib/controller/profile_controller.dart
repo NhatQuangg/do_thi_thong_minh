@@ -6,10 +6,6 @@ import 'package:get/get.dart';
 class ProfileController extends GetxController {
   static ProfileController get instance => Get.find();
 
-  // var myUser = UserModel(
-
-  // ).obs;
-
   final _authRepo = Get.put(AuthRepository());
   final _userRepo = Get.put(UserRepository());
   getUserData() {

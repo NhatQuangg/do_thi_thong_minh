@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:do_thi_thong_minh/constants/square_tile.dart';
 import 'package:do_thi_thong_minh/controller/home_controller.dart';
+import 'package:do_thi_thong_minh/pages/profile_page/profile_page_2.dart';
 import 'package:do_thi_thong_minh/pages/reflect_page/form_reflect_page/form_reflect_page.dart';
 import 'package:do_thi_thong_minh/pages/reflect_page/reflect_page.dart';
 import 'package:flutter/material.dart';
@@ -129,12 +130,12 @@ class HomeBody extends StatelessWidget {
             SizedBox(width: 10),
             GestureDetector(
               onTap: () {
-                // Navigator.of(context).push (
-                //   PageTransition(
-                //     type: PageTransitionType.rightToLeft, // Animation direction
-                //     child: CreateReflectPage(), // Your next page widget
-                //   ),
-                // );
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage2(),
+                    )
+                );
                 print('5');
               },
               child: Column(
