@@ -18,7 +18,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
   final controller = Get.put(ProfileController());
   final idemail = getEmail();
 
@@ -28,68 +27,17 @@ class _ProfilePageState extends State<ProfilePage> {
   // user
   final currentUser = FirebaseAuth.instance.currentUser!;
 
+  var current = FirebaseAuth.instance.currentUser;
   // all users
   final usersCollection = FirebaseFirestore.instance.collection("Users");
 
   final currentPassword = FirebaseAuth.instance.currentUser!.email;
-  
+
   String oldPass = "";
   String currentPasswordd = "";
 
   // edit field
-
-  // Future<void> editFieldd(String field) async {
-  //
-  //   String newValue = "";
-  //   await showDialog(
-  //       context: context,
-  //       builder: (context) => AlertDialog(
-  //         backgroundColor: Colors.white,
-  //         title: Text(
-  //           'Edit ' + field,
-  //           style: TextStyle(color: Colors.grey[900]),
-  //         ),
-  //         content: TextField(
-  //           autofocus: true,
-  //           style: TextStyle(
-  //             color: Colors.grey[900],
-  //           ),
-  //           decoration: InputDecoration(
-  //               hintText: "Enter new $field",
-  //               hintStyle: TextStyle(color: Colors.grey)
-  //           ),
-  //           onChanged: (value) {
-  //             newValue = value;
-  //             print('gia tri thay vo: $newValue');
-  //           },
-  //         ),
-  //         actions: [
-  //
-  //           // cancel button
-  //           TextButton(
-  //               onPressed: () => Navigator.pop(context),
-  //               child: Text(
-  //                 'Cancel',
-  //                 style: TextStyle(color: Colors.grey[900]),
-  //               )),
-  //
-  //           // save button
-  //           TextButton(
-  //             onPressed: () => Navigator.of(context).pop(newValue),
-  //             child: Text(
-  //               'Save',
-  //               style: TextStyle(color: Colors.grey[900]),
-  //             )
-  //           )
-  //         ],
-  //       )
-  //   );
-  //
-  // }
-
-
   Future<void> editField(String field, String idUser) async {
-    
     String newValue = "";
     await showDialog(
         context: context,
@@ -105,16 +53,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Colors.grey[900],
                 ),
                 decoration: InputDecoration(
-                  hintText: "Enter new $field",
-                  hintStyle: TextStyle(color: Colors.grey)
-                ),
+                    hintText: "Enter new $field",
+                    hintStyle: TextStyle(color: Colors.grey)),
                 onChanged: (value) {
                   newValue = value;
                   print('gia tri thay vo: $newValue');
                 },
               ),
               actions: [
-
                 // cancel button
                 TextButton(
                     onPressed: () => Navigator.pop(context),
@@ -138,7 +84,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         showSuccessSnackBar("Cập nhật thành công!");
                         Navigator.of(context).pop(newValue);
                         setState(() {});
-
                       } else {
                         showErrorSnackBar("Không được để trống");
                       }
@@ -151,124 +96,226 @@ class _ProfilePageState extends State<ProfilePage> {
             ));
   }
 
-  // Future<void> updatePassword(String field, String currentPass) async {
-  //   String newPass = "";
-  //   await showDialog(
-  //       context: context,
-  //       builder: (context) => AlertDialog(
-  //             backgroundColor: Colors.white,
-  //             title: Text(
-  //               'Edit ' + field,
-  //               style: TextStyle(color: Colors.grey[900]),
-  //             ),
-  //             content: Column(
-  //               mainAxisSize: MainAxisSize.min,
-  //               crossAxisAlignment: CrossAxisAlignment.center,
-  //               children: [
-  //                 TextField(
-  //                   autofocus: true,
-  //                   style: TextStyle(
-  //                     color: Colors.grey[900],
-  //                   ),
-  //                   decoration: InputDecoration(
-  //                       hintText: "Enter new old pass",
-  //                       hintStyle: TextStyle(color: Colors.grey)),
-  //                   onChanged: (value1) {
-  //                     oldPass = value1;
-  //                   },
-  //                 ),
-  //                 TextField(
-  //                   // autofocus: true,
-  //                   style: TextStyle(
-  //                     color: Colors.grey[900],
-  //                   ),
-  //                   decoration: InputDecoration(
-  //                       hintText: "Enter new new pass",
-  //                       hintStyle: TextStyle(color: Colors.grey)),
-  //                   onChanged: (value) {
-  //                     newPass = value;
-  //                   },
-  //                 ),
-  //               ],
-  //             ),
-  //             actions: [
-  //               // cancel button
-  //               TextButton(
-  //                   onPressed: () => Navigator.pop(context),
-  //                   child: Text(
-  //                     'Cancel',
-  //                     style: TextStyle(color: Colors.grey[900]),
-  //                   )),
-  //
-  //               // save button
-  //               TextButton(
-  //                   // onPressed: () => Navigator.of(context).pop(newPass),
-  //                   onPressed: () async {
-  //                     print(currentPass + "  " + oldPass);
-  //                     if (currentPass == oldPass) {
-  //                       User? user = FirebaseAuth.instance.currentUser;
-  //                       try {
-  //                         var credential = EmailAuthProvider.credential(
-  //                           email: user!.email!,
-  //                           password: currentPass,
-  //                         );
-  //                         await user.reauthenticateWithCredential(credential);
-  //
-  //                         await user.updatePassword(newPass);
-  //
-  //                         // update in firestore
-  //                         if (newPass.trim().length > 0) {
-  //                           await usersCollection
-  //                               .doc(currentUser.email)
-  //                               .update({field: newPass});
-  //                           print('Đã cập nhật profile');
-  //                         }
-  //                         showSuccessSnackBar("Cập nhật mật khẩu thành công!");
-  //                         print('Đã đổi mật khẩu thành công!');
-  //
-  //                         // Cập nhật giá trị mới vào TextField
-  //                         setState(() {
-  //                           currentPasswordd = newPass;
-  //                         });
-  //                       } catch (e) {
-  //                         showErrorSnackBar("Mật khẩu quá yếu (>=6 kí tự)");
-  //                         print('Lỗi khi đổi mật khẩu: $e');
-  //                         // Xử lý lỗi tại đây
-  //                       }
-  //                     } else {
-  //                       print('Mật khẩu hiện tại không đúng!');
-  //                       showErrorSnackBar("Mật khẩu hiện tại không đúng!");
-  //                     }
-  //
-  //                     Navigator.pop(context, newPass);
-  //                   },
-  //                   child: Text(
-  //                     'Save',
-  //                     style: TextStyle(color: Colors.grey[900]),
-  //                   ))
-  //             ],
-  //           ));
-  //
-  //   // print(currentPass + "  " + oldPass);
-  //   // if (currentPass == oldPass) {
-  //   //   User? user = FirebaseAuth.instance.currentUser;
-  //   //   try {
-  //   //     var credential = EmailAuthProvider.credential(
-  //   //       email: user!.email!,
-  //   //       password: currentPass,
-  //   //     );
-  //   //     await user.reauthenticateWithCredential(credential);
-  //   //
-  //   //     await user.updatePassword(newPass);
-  //   //
-  //   //     print('Đã đổi mật khẩu thành công!');
-  //   //   } catch (e) {
-  //   //     print('Lỗi khi đổi mật khẩu: $e');
-  //   //   }
-  //   // } else {
-  //   //   print('Mật khẩu hiện tại không đúng!');
-  //   // }
-  // }
+  Future<void> updatePassword(
+      String field, String currentPass, String idUser) async {
+    String newPass = "";
+    print("mat khau hien tai de test: ${currentPass}");
+    await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              backgroundColor: Colors.white,
+              title: Text(
+                'Edit ' + field,
+                style: TextStyle(color: Colors.grey[900]),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextField(
+                    autofocus: true,
+                    style: TextStyle(
+                      color: Colors.grey[900],
+                    ),
+                    decoration: InputDecoration(
+                        hintText: "Enter new old pass",
+                        hintStyle: TextStyle(color: Colors.grey)),
+                    onChanged: (value1) {
+                      oldPass = value1;
+                      print("day la oldPass: ${oldPass}");
+                    },
+                  ),
+                  TextField(
+                    // autofocus: true,
+                    style: TextStyle(
+                      color: Colors.grey[900],
+                    ),
+                    decoration: InputDecoration(
+                        hintText: "Enter new new pass",
+                        hintStyle: TextStyle(color: Colors.grey)),
+                    onChanged: (value) {
+                      newPass = value;
+                      print("day la newPass: ${newPass}");
+                    },
+                  ),
+                ],
+              ),
+              actions: [
+                // cancel button
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.grey[900]),
+                    )),
+
+                // save button
+                TextButton(
+                    // onPressed: () => Navigator.of(context).pop(newPass),
+                    onPressed: () async {
+                      print("check mk htai va mk nhap vao co dung ko: " +
+                          currentPass +
+                          "  " +
+                          oldPass +
+                          "  " +
+                          newPass);
+                      if (currentPass == oldPass) {
+                        User? user = FirebaseAuth.instance.currentUser;
+
+                        print("1: " + user!.email! + "  " + currentPass);
+                        var credential = EmailAuthProvider.credential(
+                          email: user!.email!,
+                          password: currentPass,
+                        );
+                        print("2.11");
+                        await currentUser
+                            .reauthenticateWithCredential(credential)
+                            .then((value) {
+                          currentUser.updatePassword(newPass);
+
+                          // if (newPass.trim().length > 0) {
+                          //       usersCollection
+                          //       .doc(idUser)
+                          //       .update({field: newPass});
+                          //   print('Đã cập nhật profile');
+                          // }
+                          // showSuccessSnackBar("Cập nhật mật khẩu thành công!");
+                          // print('Đã đổi mật khẩu thành công!');
+                          //
+                          // // Cập nhật giá trị mới vào TextField
+                          // setState(() {
+                          //   currentPasswordd = newPass;
+                          // });
+                        }).catchError((e) {
+                          print("đây là lỗi: " + e);
+                        });
+
+                        print("2");
+
+                        // showErrorSnackBar("Mật khẩu quá yếu (>=6 kí tự)");
+                        // Xử lý lỗi tại đây
+                      } else {
+                        print('Mật khẩu hiện tại không đúng!');
+                        showErrorSnackBar("Mật khẩu hiện tại không đúng!");
+                      }
+
+                      Navigator.pop(context, newPass);
+                    },
+                    child: Text(
+                      'Save',
+                      style: TextStyle(color: Colors.grey[900]),
+                    ))
+              ],
+            ));
+  }
+
+  Future<void> updatePasswordd(
+      String field, String currentPass, String idUser) async {
+    String newPass = "";
+    await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              backgroundColor: Colors.white,
+              title: Text(
+                'Edit ' + field,
+                style: TextStyle(color: Colors.grey[900]),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextField(
+                    autofocus: true,
+                    style: TextStyle(
+                      color: Colors.grey[900],
+                    ),
+                    decoration: InputDecoration(
+                        hintText: "Enter new old pass",
+                        hintStyle: TextStyle(color: Colors.grey)),
+                    onChanged: (value1) {
+                      oldPass = value1;
+                    },
+                  ),
+                  TextField(
+                    // autofocus: true,
+                    style: TextStyle(
+                      color: Colors.grey[900],
+                    ),
+                    decoration: InputDecoration(
+                        hintText: "Enter new new pass",
+                        hintStyle: TextStyle(color: Colors.grey)),
+                    onChanged: (value) {
+                      newPass = value;
+                    },
+                  ),
+                ],
+              ),
+              actions: [
+                // cancel button
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.grey[900]),
+                    )),
+
+                // save button
+                TextButton(
+                    // onPressed: () => Navigator.of(context).pop(newPass),
+                    onPressed: () async {
+                      print(currentPass + "  " + oldPass);
+                      if (currentPass == oldPass) {
+                        User? user = FirebaseAuth.instance.currentUser;
+
+                        if (newPass.trim().length >= 6) {
+                          print("1: " + user!.email! + "  " + currentPass);
+
+                          var credential = EmailAuthProvider.credential(
+                            email: user!.email!,
+                            password: currentPass,
+                          );
+
+                          print("1.1");
+
+                          await currentUser
+                              .reauthenticateWithCredential(credential)
+                              .then((value) {
+                            currentUser.updatePassword(newPass);
+                          }).catchError((e) {
+                            print("Loi: $e");
+                          });
+
+                          print("4");
+
+                          await usersCollection
+                              .doc(idUser)
+                              .update({field: newPass});
+
+                          showSuccessSnackBar("Cập nhật mật khẩu thành công!");
+
+                          print('Đã đổi mật khẩu thành công!');
+
+                          setState(() {
+                            currentPasswordd = newPass;
+                          });
+                        } else {
+                          showErrorSnackBar("Mật khẩu quá yếu (>=6 kí tự)");
+                          print('Lỗi khi đổi mật khẩu');
+                        }
+                      } else {
+                        print('Mật khẩu hiện tại không đúng!');
+                        showErrorSnackBar("Mật khẩu hiện tại không đúng!");
+                      }
+
+                      Navigator.pop(context, newPass);
+                    },
+                    child: Text(
+                      'Save',
+                      style: TextStyle(color: Colors.grey[900]),
+                    ))
+              ],
+            ));
+  }
 
   void showSuccessSnackBar(String message) {
     AnimatedSnackBar.material(message,
@@ -314,12 +361,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   // final userDataa = snapshot.data!.data() as Map<String, dynamic>;
 
                   // final userData = userDataa.map((key, value) => MapEntry(key, value.toString()));
-                  // currentPasswordd = userData['password'] ?? "";
                   // print("mat khau htai: " + currentPasswordd);
 
                   // final userData = snapshot.data!.data();
                   UserModel user = snapshot.data as UserModel;
-                  print("email: ${user.email} , ${user.fullName}, ${user.id}" );
+                  currentPasswordd = user.password ?? "";
+
+                  print("email: ${user.email} , ${user.fullName}, ${user.id}");
                   return Column(
                     children: [
                       const SizedBox(
@@ -358,28 +406,28 @@ class _ProfilePageState extends State<ProfilePage> {
                       MyTextBox(
                         text: user.fullName ?? "",
                         sectionName: 'fullname',
-                        onPressed: () => editField('fullName', user.id.toString()),
+                        onPressed: () =>
+                            editField('fullName', user.id.toString()),
+                        obscureText: false,
                       ),
-
-                      // MyTextBox(
-                      //   text: user.fullName ?? "",
-                      //   sectionName: 'fullName',
-                      //   onPressed: () => editFieldd('fullName'),
-                      // ),
 
                       // phone
                       MyTextBox(
                         text: user.phoneNo ?? "",
                         sectionName: 'phone',
                         onPressed: () => editField('phone', user.id.toString()),
+                        obscureText: false,
                       ),
 
                       // pass
-                      // MyTextBox(
-                      //   text: userDataa['password'] ?? "",
-                      //   sectionName: 'password',
-                      //   onPressed: () => updatePassword('password', currentPasswordd),
-                      // ),
+                      MyTextBox(
+                        text: user.password ?? "",
+                        sectionName: 'password',
+                        onPressed: () => updatePasswordd(
+                            'password', currentPasswordd, user.id.toString()),
+                        obscureText: true,
+
+                      ),
                     ],
                   );
                 } else if (snapshot.hasError) {

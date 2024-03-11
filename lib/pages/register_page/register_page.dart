@@ -28,6 +28,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final controller = Get.put(RegisterController());
   String levelUser = '1';
+  bool _passwordVisible = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -342,19 +343,95 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 10),
 
                   // password
-                  MyTextField(
-                    controller: controller.password,
-                    hintText: 'Mật khẩu',
-                    obscureText: true,
+                  // MyTextField(
+                  //   controller: controller.password,
+                  //   hintText: 'Mật khẩu',
+                  //   obscureText: true,
+                  // ),
+                  //
+                  // const SizedBox(height: 10),
+                  //
+                  // // repassword textfield
+                  // MyTextField(
+                  //   controller: controller.repass,
+                  //   hintText: 'Xác nhận mật khẩu',
+                  //   obscureText: true,
+                  // ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: TextFormField(
+                      controller: controller.password,
+                      obscureText: !_passwordVisible,
+                      decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () async {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey.shade400),
+                              borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                          fillColor: Colors.grey.shade200,
+                          filled: true,
+                          hintText: 'Mật khẩu',
+                          hintStyle: TextStyle(
+                            color: Colors.grey[500],
+                            fontWeight: FontWeight.w100,
+                            fontSize: 15,
+                          ),
+                          contentPadding: EdgeInsets.fromLTRB(20, 0, 0, 0)
+                      ),
+                    ),
                   ),
 
                   const SizedBox(height: 10),
 
-                  // repassword textfield
-                  MyTextField(
-                    controller: controller.repass,
-                    hintText: 'Xác nhận mật khẩu',
-                    obscureText: true,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: TextFormField(
+                      controller: controller.repass,
+                      obscureText: !_passwordVisible,
+                      decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () async {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey.shade400),
+                              borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                          fillColor: Colors.grey.shade200,
+                          filled: true,
+                          hintText: 'Xác nhận mật khẩu',
+                          hintStyle: TextStyle(
+                            color: Colors.grey[500],
+                            fontWeight: FontWeight.w100,
+                            fontSize: 15,
+                          ),
+                          contentPadding: EdgeInsets.fromLTRB(20, 0, 0, 0)
+                      ),
+                    ),
                   ),
 
                   const SizedBox(height: 10),

@@ -25,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   // text editing controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  bool _passwordVisible = false;
 
   // sign user in method
   void signUserIn() async {
@@ -109,11 +110,49 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: false,
                 ),
                 const SizedBox(height: 10),
-                MyTextField(
-                  controller: passwordController,
-                  hintText: 'Mật khẩu',
-                  obscureText: true,
+                // MyTextField(
+                //   controller: passwordController,
+                //   hintText: 'Mật khẩu',
+                //   obscureText: true,
+                // ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: TextFormField(
+                    controller: passwordController,
+                    obscureText: !_passwordVisible,
+                    decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () async {
+                            // Update the state i.e. toogle the state of passwordVisible variable
+                            setState(() {
+                              _passwordVisible = !_passwordVisible;
+                            });
+                          },
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        hintText: 'Mật khẩu',
+                        hintStyle: TextStyle(
+                          color: Colors.grey[500],
+                          fontWeight: FontWeight.w100,
+                          fontSize: 15,
+                        ),
+                        contentPadding: EdgeInsets.fromLTRB(20, 0, 0, 0)
+                    ),
+                  ),
                 ),
+
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
